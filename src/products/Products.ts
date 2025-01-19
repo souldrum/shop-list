@@ -1,24 +1,19 @@
+import {
+  useGetStorageData,
+  useSetStorageData,
+} from "@/storage/useLocalStorage";
 import type { Product } from "@/types/product.types";
+import { v4 as uuidv4 } from "uuid";
 import { ref, type Ref } from "vue";
 
-const productList: Product[] = [
-  { id: "1", title: "Колбаса", done: false, canceled: false, deleted: false },
-  { id: "2", title: "Хлеб", done: false, canceled: false, deleted: false },
-  { id: "3", title: "Сыр", done: false, canceled: false, deleted: false },
-  { id: "4", title: "Сметана", done: false, canceled: false, deleted: false },
-  {
-    id: "5",
-    title: "Мариночка",
-    done: false,
-    canceled: false,
-    deleted: false,
-  },
-];
+export const PRODUCTS = "products";
 
 export class Products {
   private static _instanceRef: Products;
 
-  private _products: Ref<Product[]> = ref(productList);
+  private _products: Ref<Product[]> = ref(
+    useGetStorageData<Product>(PRODUCTS, [])
+  );
 
   private constructor() {}
 
@@ -36,7 +31,7 @@ export class Products {
 
   public addProduct = (title: string): void => {
     const newProduct: Product = {
-      id: String(Date.now()),
+      id: uuidv4(),
       title,
       done: false,
       canceled: false,
@@ -44,10 +39,12 @@ export class Products {
     };
 
     this._products.value = [...this._products.value, newProduct];
+    useSetStorageData(PRODUCTS, this._products.value);
   };
 
   public deleteProduct = (id: string): void => {
     this._products.value = this._products.value.filter((p) => p.id !== id);
+    useSetStorageData(PRODUCTS, this._products.value);
   };
 
   public getProductsQty = (): number => {

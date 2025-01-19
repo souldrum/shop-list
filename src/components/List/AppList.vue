@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useDeleteProduct, useGetProducts } from "@/composables/useProducts";
+import { PRODUCTS } from "@/products/Products";
+import { useSetStorageData } from "@/storage/useLocalStorage";
 import {
   CheckIcon,
   MinusCircleIcon,
@@ -22,6 +24,8 @@ const onDone = (id: string) => {
     targetProduct.done = isDone.value;
     targetProduct.canceled = isCanceled.value;
   }
+
+  useSetStorageData(PRODUCTS, products.value);
 };
 
 const onCancel = (id: string) => {
@@ -34,6 +38,8 @@ const onCancel = (id: string) => {
     targetProduct.canceled = isCanceled.value;
     targetProduct.done = isDone.value;
   }
+
+  useSetStorageData(PRODUCTS, products.value);
 };
 
 const onDelete = (id: string) => {

@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <footer class="border-t border-gray-100">Footer</footer>
+  <footer class="border-t border-gray-100 px-4">Footer</footer>
 </template>
