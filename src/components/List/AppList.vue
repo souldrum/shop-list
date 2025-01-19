@@ -44,23 +44,23 @@ const onDelete = (id: string) => {
 </script>
 
 <template>
-  <ul class="flex flex-col gap-2 list-decimal">
+  <ul class="flex flex-col gap-2">
     <li
       class="flex justify-between p-2 gap-2 items-center border border-gray-200 rounded"
-      :class="{ 'bg-green-100': done, 'bg-red-200': canceled }"
-      v-for="{ id, title, done, canceled } of products"
-      :key="id"
+      :class="{ 'bg-green-100': product.done, 'bg-red-200': product.canceled }"
+      v-for="(product, index) of products"
+      :key="product.id"
     >
-      <span class="mr-auto">{{ title }}</span>
+      <span class="mr-auto">{{ index + 1 }}. {{ product.title }}</span>
       <CheckIcon
         class="size-4 text-green-500 cursor-pointer"
-        @click="onDone(id)"
+        @click="onDone(product.id)"
       />
       <MinusCircleIcon
         class="size-4 text-red-500 cursor-pointer"
-        @click="onCancel(id)"
+        @click="onCancel(product.id)"
       />
-      <TrashIcon class="size-4 cursor-pointer" @click="onDelete(id)" />
+      <TrashIcon class="size-4 cursor-pointer" @click="onDelete(product.id)" />
     </li>
   </ul>
 </template>

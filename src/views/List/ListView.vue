@@ -35,7 +35,7 @@ const onSubmit = () => {
       <input
         id="newItem"
         type="text"
-        class="border border-gray-300 rounded p-1 outline-gray-300"
+        class="border border-gray-200 rounded p-1 outline-gray-200"
         v-model="productTitle"
         autocomplete="off"
       />
