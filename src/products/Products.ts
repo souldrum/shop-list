@@ -33,6 +33,7 @@ export class Products {
     const newProduct: Product = {
       id: uuidv4(),
       title,
+      edited: false,
       done: false,
       canceled: false,
       deleted: false,
