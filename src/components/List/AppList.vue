@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useDeleteProduct, useGetProducts } from "@/composables/useProducts";
+import { useDeleteProduct } from "@/composables/useProducts";
 import { PRODUCTS } from "@/products/Products";
 import { useSetStorageData } from "@/storage/useLocalStorage";
+import type { Product } from "@/types/product.types";
 import {
   CheckIcon,
   MinusCircleIcon,
@@ -9,13 +10,17 @@ import {
 } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
 
-const products = useGetProducts();
+type Props = {
+  products: Product[];
+};
+
+const { products } = defineProps<Props>();
 
 const isDone = ref(false);
 const isCanceled = ref(false);
 
 const onDone = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
+  const targetProduct = products.find((p) => p.id === id);
 
   if (targetProduct) {
     isDone.value = !isDone.value;
@@ -25,11 +30,11 @@ const onDone = (id: string) => {
     targetProduct.canceled = isCanceled.value;
   }
 
-  useSetStorageData(PRODUCTS, products.value);
+  useSetStorageData(PRODUCTS, products);
 };
 
 const onCancel = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
+  const targetProduct = products.find((p) => p.id === id);
 
   if (targetProduct) {
     isCanceled.value = !isCanceled.value;
@@ -39,7 +44,7 @@ const onCancel = (id: string) => {
     targetProduct.done = isDone.value;
   }
 
-  useSetStorageData(PRODUCTS, products.value);
+  useSetStorageData(PRODUCTS, products);
 };
 
 const onDelete = (id: string) => {

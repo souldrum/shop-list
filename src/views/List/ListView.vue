@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import AppList from "@/components/List/AppList.vue";
-import { useAddProduct, useProductsQty } from "@/composables/useProducts";
+import {
+  useAddProduct,
+  useGetProducts,
+  useProductsQty,
+} from "@/composables/useProducts";
+import { PRODUCTS } from "@/products/Products";
+import { useSetStorageData } from "@/storage/useLocalStorage";
 import { ref, watchEffect } from "vue";
 
+const products = useGetProducts();
 const productTitle = ref("");
 const qty = ref(useProductsQty());
 
 const updateQty = () => {
   qty.value = useProductsQty();
+};
+
+const onClearList = () => {
+  if (!confirm("Очистить список?")) return;
+
+  products.value = [];
+  useSetStorageData(PRODUCTS, products.value);
 };
 
 watchEffect(updateQty);
@@ -28,7 +42,7 @@ const onSubmit = () => {
       </button>
     </div>
 
-    <AppList />
+    <AppList :products />
 
     <form class="flex gap-2 items-center" @submit.prevent="onSubmit">
       <label for="newItem">Новый товар</label>
@@ -48,5 +62,12 @@ const onSubmit = () => {
       <span>Всего продуктов</span>
       <span>{{ qty }}</span>
     </div>
+
+    <button
+      class="flex w-fit border border-gray-200 rounded p-1"
+      @click="onClearList"
+    >
+      Очистить список
+    </button>
   </div>
 </template>
