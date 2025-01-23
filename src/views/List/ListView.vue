@@ -4,9 +4,8 @@ import {
   useAddProduct,
   useGetProducts,
   useProductsQty,
+  useUpdateProducts,
 } from "@/composables/useProducts";
-import { PRODUCTS } from "@/products/Products";
-import { useSetStorageData } from "@/storage/useLocalStorage";
 import { ref, watchEffect } from "vue";
 
 const products = useGetProducts();
@@ -21,7 +20,7 @@ const onClearList = () => {
   if (!confirm("Очистить список?")) return;
 
   products.value = [];
-  useSetStorageData(PRODUCTS, products.value);
+  useUpdateProducts();
 };
 
 watchEffect(updateQty);
@@ -59,7 +58,7 @@ const onSubmit = () => {
     </form>
 
     <div class="flex gap-2">
-      <span>Всего продуктов</span>
+      <span>Всего продуктов:</span>
       <span>{{ qty }}</span>
     </div>
 

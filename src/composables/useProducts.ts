@@ -2,8 +2,13 @@ import { Products } from "@/products/Products";
 import type { Product } from "@/types/product.types";
 import { type Ref } from "vue";
 
-const { getProducts, deleteProduct, addProduct, getProductsQty } =
-  Products.getInstance();
+const {
+  getProducts,
+  deleteProduct,
+  addProduct,
+  getProductsQty,
+  updateProducts,
+} = Products.getInstance();
 
 export const useGetProducts = (): Ref<Product[]> => {
   const productList = getProducts();
@@ -21,4 +26,8 @@ export const useDeleteProduct = (id: string): void => {
 
 export const useProductsQty = (): number => {
   return getProductsQty();
+};
+
+export const useUpdateProducts = () => {
+  updateProducts();
 };

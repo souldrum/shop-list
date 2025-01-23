@@ -50,4 +50,8 @@ export class Products {
   public getProductsQty = (): number => {
     return this._products.value.length;
   };
+
+  public updateProducts = (): void => {
+    useSetStorageData(PRODUCTS, this._products.value);
+  };
 }

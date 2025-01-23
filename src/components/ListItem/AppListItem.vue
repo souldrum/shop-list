@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { useDeleteProduct, useGetProducts } from "@/composables/useProducts";
-import { PRODUCTS } from "@/products/Products";
-import { useSetStorageData } from "@/storage/useLocalStorage";
+import {
+  useDeleteProduct,
+  useGetProducts,
+  useUpdateProducts,
+} from "@/composables/useProducts";
 import type { Product } from "@/types/product.types";
 import {
   CheckIcon,
@@ -44,7 +46,8 @@ const onBlur = (id: string) => {
 
   targetProduct.title = editValue.value;
   isEdit.value = false;
-  useSetStorageData(PRODUCTS, products.value);
+
+  useUpdateProducts();
 };
 
 const onDone = (id: string) => {
@@ -58,7 +61,7 @@ const onDone = (id: string) => {
   targetProduct.done = isDone.value;
   targetProduct.canceled = isCanceled.value;
 
-  useSetStorageData(PRODUCTS, products.value);
+  useUpdateProducts();
 };
 
 const onCancel = (id: string) => {
@@ -72,7 +75,7 @@ const onCancel = (id: string) => {
   targetProduct.canceled = isCanceled.value;
   targetProduct.done = isDone.value;
 
-  useSetStorageData(PRODUCTS, products.value);
+  useUpdateProducts();
 };
 
 const onDelete = (id: string) => {
