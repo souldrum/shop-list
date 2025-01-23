@@ -85,7 +85,10 @@ const onDelete = (id: string) => {
 <template>
   <li
     class="flex justify-between p-2 gap-2 items-center border border-gray-200 rounded"
-    :class="{ 'bg-green-100': product.done, 'bg-red-200': product.canceled }"
+    :class="{
+      'bg-tertiary-container': product.done,
+      'bg-secondary-container': product.canceled,
+    }"
   >
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
       <input

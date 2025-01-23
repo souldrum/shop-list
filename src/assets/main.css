@@ -5,6 +5,58 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: 142 77 47;
+    --surface-tint: 142 77 47;
+    --on-primary: 255 255 255;
+    --primary-container: 255 219 205;
+    --on-primary-container: 54 15 0;
+    --secondary: 119 87 74;
+    --on-secondary: 255 255 255;
+    --secondary-container: 255 219 205;
+    --on-secondary-container: 44 22 12;
+    --tertiary: 103 95 48;
+    --on-tertiary: 255 255 255;
+    --tertiary-container: 239 227 169;
+    --on-tertiary-container: 32 28 0;
+    --error: 186 26 26;
+    --on-error: 255 255 255;
+    --error-container: 255 218 214;
+    --on-error-container: 65 0 2;
+    --background: 255 248 246;
+    --on-background: 35 26 22;
+    --surface: 255 248 246;
+    --on-surface: 35 26 22;
+    --surface-variant: 245 222 213;
+    --on-surface-variant: 83 68 61;
+    --outline: 133 115 108;
+    --outline-variant: 216 194 186;
+    --shadow: 0 0 0;
+    --scrim: 0 0 0;
+    --inverse-surface: 56 46 42;
+    --inverse-on-surface: 255 237 231;
+    --inverse-primary: 255 181 150;
+    --primary-fixed: 255 219 205;
+    --on-primary-fixed: 54 15 0;
+    --primary-fixed-dim: 255 181 150;
+    --on-primary-fixed-variant: 113 54 26;
+    --secondary-fixed: 255 219 205;
+    --on-secondary-fixed: 44 22 12;
+    --secondary-fixed-dim: 230 190 173;
+    --on-secondary-fixed-variant: 93 64 52;
+    --tertiary-fixed: 239 227 169;
+    --on-tertiary-fixed: 32 28 0;
+    --tertiary-fixed-dim: 210 199 143;
+    --on-tertiary-fixed-variant: 78 71 27;
+    --surface-dim: 232 214 208;
+    --surface-bright: 255 248 246;
+    --surface-container-lowest: 255 255 255;
+    --surface-container-low: 255 241 236;
+    --surface-container: 252 234 228;
+    --surface-container-high: 246 229 222;
+    --surface-container-highest: 241 223 216;
+  }
+
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"] {
