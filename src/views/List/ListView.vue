@@ -6,6 +6,7 @@ import {
   useProductsQty,
   useUpdateProducts,
 } from "@/composables/useProducts";
+import AppButton from "@/ui/Button/AppButton.vue";
 import { ref, watchEffect } from "vue";
 
 const products = useGetProducts();
@@ -36,9 +37,9 @@ const onSubmit = () => {
   <div class="flex flex-col gap-4 py-4">
     <div class="flex items-center gap-2">
       <h1>Список</h1>
-      <button class="border rounded p-1">
+      <AppButton style-type="elevated">
         <RouterLink :to="{ name: 'home' }"> На главную </RouterLink>
-      </button>
+      </AppButton>
     </div>
 
     <AppList :products />
@@ -52,9 +53,9 @@ const onSubmit = () => {
         v-model="productTitle"
         autocomplete="off"
       />
-      <button class="border rounded p-1" @submit.prevent="onSubmit">
+      <AppButton style-type="outlined" @submit.prevent="onSubmit">
         Добавить в список
-      </button>
+      </AppButton>
     </form>
 
     <div class="flex gap-2">
@@ -62,11 +63,8 @@ const onSubmit = () => {
       <span>{{ qty }}</span>
     </div>
 
-    <button
-      class="flex w-fit border border-gray-200 rounded p-1"
-      @click="onClearList"
-    >
+    <AppButton style-type="outlined" class="flex w-fit" @click="onClearList">
       Очистить список
-    </button>
+    </AppButton>
   </div>
 </template>

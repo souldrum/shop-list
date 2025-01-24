@@ -27,6 +27,8 @@ export default {
         "on-error-container": "rgb(var(--on-error-container) / <alpha-value>)",
         background: "rgb(var(--background) / <alpha-value>)",
         "on-background": "rgb(var(--on-background) / <alpha-value>)",
+        "on-background-op-12": "rgb(var(--on-background) / 12%)",
+        "on-background-op-38": "rgb(var(--on-background) / 38%)",
         surface: "rgb(var(--surface) / <alpha-value>)",
         "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
         "surface-variant": "rgb(var(--surface-variant) / <alpha-value>)",
