@@ -87,7 +87,7 @@ const onDelete = (id: string) => {
 
 <template>
   <li
-    class="flex justify-between p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low"
+    class="flex justify-between max-w-full p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low text-on-surface-variant"
     :class="{
       'bg-tertiary-container': product.done,
       'bg-error-container': product.canceled,

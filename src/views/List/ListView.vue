@@ -30,11 +30,12 @@ watchEffect(updateQty);
 const onSubmit = () => {
   if (!productTitle.value.trim()) return;
 
-  const targetProduct = products.value.find(
-    (p) => p.title.trim() === productTitle.value.trim()
+  const duplicateTitleProduct = products.value.find(
+    (p) =>
+      p.title.trim().toLowerCase() === productTitle.value.trim().toLowerCase()
   );
 
-  if (targetProduct) {
+  if (duplicateTitleProduct) {
     alert("Этот продукт уже есть в списке");
     return;
   }
@@ -47,33 +48,36 @@ const onSubmit = () => {
 
 <template>
   <div class="flex flex-col gap-4 py-4">
-    <div class="flex items-center gap-2">
-      <h1>Список</h1>
+    <div class="flex justify-center items-center gap-2">
+      <h1 class="text-title sm:text-headline-sm text-primary">Список</h1>
     </div>
 
     <div class="text-center text-on-background-op-38" v-if="!products.length">
-      Список пуст, добавьте товары
+      Список пуст, добавьте продукты
     </div>
     <AppList v-else :products />
 
     <form class="flex gap-2 items-center" @submit.prevent="onSubmit">
-      <label for="newItem">Новый товар</label>
-      <input
-        id="newItem"
-        type="text"
-        class="border border-gray-200 rounded p-1 outline-gray-200"
-        v-model="productTitle"
-        autocomplete="off"
-      />
-      <AppButton style-type="outlined" @submit.prevent="onSubmit">
+      <div
+        class="border-b focus-within:border-b-2 border-outline-variant pb-3 pl-4 min-w-input text-outline text-body-lg bg-inherit"
+      >
+        <input
+          class="pt-2 bg-transparent outline-none autofill:shadow-input-autocomplete w-11/12 placeholder:text-outline-variant"
+          v-model="productTitle"
+          placeholder="Новый продукт"
+          autoComplete="off"
+        />
+      </div>
+
+      <AppButton style-type="filled" @submit.prevent="onSubmit">
         <PlusIcon class="size-5" />
-        <span> Добавить в список </span>
+        <span class="hidden sm:inline"> Добавить </span>
       </AppButton>
     </form>
 
-    <div class="flex gap-2">
+    <div class="flex gap-2 text-secondary">
       <span>Всего продуктов:</span>
-      <span>{{ qty }}</span>
+      <span class="text-secondary-fixed-dim">{{ qty }}</span>
     </div>
 
     <AppButton
