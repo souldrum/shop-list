@@ -87,22 +87,22 @@ const onDelete = (id: string) => {
 
 <template>
   <li
-    class="flex justify-between p-2 gap-2 items-center border border-gray-200 rounded"
+    class="flex justify-between p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low"
     :class="{
       'bg-tertiary-container': product.done,
-      'bg-secondary-container': product.canceled,
+      'bg-error-container': product.canceled,
     }"
   >
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
       <input
-        class="bg-inherit outline-none border-b border-gray-200 p-1"
+        class="bg-inherit outline-none border-b border-outline p-1"
         v-model="editValue"
         @blur="onBlur(product.id)"
         @keyup.enter="onBlur(product.id)"
       />
 
       <CheckIcon
-        class="size-6 text-gray-500 cursor-pointer"
+        class="size-6 text-secondary cursor-pointer"
         @click="onBlur(product.id)"
       />
     </div>
