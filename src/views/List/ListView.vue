@@ -37,12 +37,13 @@ const onSubmit = () => {
   <div class="flex flex-col gap-4 py-4">
     <div class="flex items-center gap-2">
       <h1>Список</h1>
-      <AppButton style-type="elevated">
-        <RouterLink :to="{ name: 'home' }"> На главную </RouterLink>
-      </AppButton>
     </div>
 
-    <AppList :products />
+    <div class="text-center text-on-background-op-38" v-if="!products.length">
+      Список пуст, добавьте товары
+    </div>
+
+    <AppList v-else :products />
 
     <form class="flex gap-2 items-center" @submit.prevent="onSubmit">
       <label for="newItem">Новый товар</label>
@@ -63,7 +64,12 @@ const onSubmit = () => {
       <span>{{ qty }}</span>
     </div>
 
-    <AppButton style-type="outlined" class="flex w-fit" @click="onClearList">
+    <AppButton
+      v-if="products.length"
+      style-type="outlined"
+      class="flex w-fit"
+      @click="onClearList"
+    >
       Очистить список
     </AppButton>
   </div>
