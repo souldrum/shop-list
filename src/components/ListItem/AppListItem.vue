@@ -108,17 +108,17 @@ const onDelete = (id: string) => {
     </div>
 
     <span v-else class="mr-auto">{{ index + 1 }}. {{ product.title }}</span>
-    <div v-if="!isEdit" class="flex gap-2">
+    <div v-if="!isEdit" class="flex gap-3">
       <PencilIcon
-        class="size-5 cursor-pointer"
+        class="size-6 cursor-pointer"
         @click="onEdit(product.title)"
       />
       <CheckIcon
-        class="size-5 text-green-500 cursor-pointer"
+        class="size-6 text-green-500 cursor-pointer"
         @click="onDone(product.id)"
       />
       <MinusCircleIcon
-        class="size-5 text-red-500 cursor-pointer"
+        class="size-6 text-red-500 cursor-pointer"
         @click="onCancel(product.id)"
       />
       <TrashIcon class="size-5 cursor-pointer" @click="onDelete(product.id)" />
