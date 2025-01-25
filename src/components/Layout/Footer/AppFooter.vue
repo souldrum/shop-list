@@ -1,9 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+
+const year = ref(new Date().getFullYear());
+</script>
 
 <template>
   <footer
-    class="border-t border-gray-100 bg-primary-fixed-dim text-primary px-4"
+    class="flex justify-center bg-primary-fixed-dim text-primary px-4 py-1"
   >
-    Footer
+    <div class="container flex flex-col items-center">
+      <span>souldrum</span>
+      <span>{{ year }}</span>
+    </div>
   </footer>
 </template>

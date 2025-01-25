@@ -8,6 +8,7 @@ import {
 } from "@/composables/useProducts";
 import AppButton from "@/ui/Button/AppButton.vue";
 import { ref, watchEffect } from "vue";
+import { PlusIcon } from "@heroicons/vue/24/outline";
 
 const products = useGetProducts();
 const productTitle = ref("");
@@ -27,6 +28,17 @@ const onClearList = () => {
 watchEffect(updateQty);
 
 const onSubmit = () => {
+  if (!productTitle.value.trim()) return;
+
+  const targetProduct = products.value.find(
+    (p) => p.title.trim() === productTitle.value.trim()
+  );
+
+  if (targetProduct) {
+    alert("Этот продукт уже есть в списке");
+    return;
+  }
+
   useAddProduct(productTitle.value);
 
   productTitle.value = "";
@@ -42,7 +54,6 @@ const onSubmit = () => {
     <div class="text-center text-on-background-op-38" v-if="!products.length">
       Список пуст, добавьте товары
     </div>
-
     <AppList v-else :products />
 
     <form class="flex gap-2 items-center" @submit.prevent="onSubmit">
@@ -55,7 +66,8 @@ const onSubmit = () => {
         autocomplete="off"
       />
       <AppButton style-type="outlined" @submit.prevent="onSubmit">
-        Добавить в список
+        <PlusIcon class="size-5" />
+        <span> Добавить в список </span>
       </AppButton>
     </form>
 
