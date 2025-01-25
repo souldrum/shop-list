@@ -7,7 +7,7 @@ import AppHeader from "../Layout/Header/AppHeader.vue";
 <template>
   <div class="grid grid-rows-layout w-full">
     <AppHeader />
-    <main class="container bg-surface w-full mx-auto px-4">
+    <main class="container bg-surface w-full mx-auto px-3">
       <RouterView />
     </main>
     <AppFooter />
