@@ -1,8 +1,184 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap")
+layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: rgb(var(--primary));
+  --color-surface-tint: rgb(var(--surface-tint));
+  --color-on-primary: rgb(var(--on-primary));
+  --color-primary-container: rgb(var(--primary-container));
+  --color-on-primary-container: rgb(var(--on-primary-container));
+  --color-secondary: rgb(var(--secondary));
+  --color-on-secondary: rgb(var(--on-secondary));
+  --color-secondary-container: rgb(var(--secondary-container));
+  --color-on-secondary-container: rgb(var(--on-secondary-container));
+  --color-tertiary: rgb(var(--tertiary));
+  --color-on-tertiary: rgb(var(--on-tertiary));
+  --color-tertiary-container: rgb(var(--tertiary-container));
+  --color-on-tertiary-container: rgb(var(--on-tertiary-container));
+  --color-error: rgb(var(--error));
+  --color-on-error: rgb(var(--on-error));
+  --color-error-container: rgb(var(--error-container));
+  --color-on-error-container: rgb(var(--on-error-container));
+  --color-background: rgb(var(--background));
+  --color-on-background: rgb(var(--on-background));
+  --color-on-background-op-12: rgb(var(--on-background) / 12%);
+  --color-on-background-op-38: rgb(var(--on-background) / 38%);
+  --color-surface: rgb(var(--surface));
+  --color-on-surface: rgb(var(--on-surface));
+  --color-surface-variant: rgb(var(--surface-variant));
+  --color-on-surface-variant: rgb(var(--on-surface-variant));
+  --color-outline: rgb(var(--outline));
+  --color-outline-variant: rgb(var(--outline-variant));
+  --color-shadow: rgb(var(--shadow));
+  --color-scrim: rgb(var(--scrim));
+  --color-inverse-surface: rgb(var(--inverse-surface));
+  --color-inverse-primary: rgb(var(--inverse-primary));
+  --color-primary-fixed: rgb(var(--primary-fixed));
+  --color-on-primary-fixed: rgb(var(--on-primary-fixed));
+  --color-primary-fixed-dim: rgb(var(--primary-fixed-dim));
+  --color-on-primary-fixed-variant: rgb(var(--on-primary-fixed-variant));
+  --color-secondary-fixed: rgb(var(--secondary-fixed));
+  --color-on-secondary-fixed: rgb(var(--on-secondary-fixed));
+  --color-secondary-fixed-dim: rgb(var(--secondary-fixed-dim));
+  --color-on-secondary-fixed-variant: rgb(var(--on-secondary-fixed-variant));
+  --color-tertiary-fixed: rgb(var(--tertiary-fixed));
+  --color-on-tertiary-fixed: rgb(var(--on-tertiary-fixed));
+  --color-tertiary-fixed-dim: rgb(var(--tertiary-fixed-dim));
+  --color-on-tertiary-fixed-variant: rgb(var(--on-tertiary-fixed-variant));
+  --color-surface-dim: rgb(var(--surface-dim));
+  --color-surface-bright: rgb(var(--surface-bright));
+  --color-surface-container-lowest: rgb(var(--surface-container-lowest));
+  --color-surface-container-low: rgb(var(--surface-container-low));
+  --color-surface-container: rgb(var(--surface-container));
+  --color-surface-container-high: rgb(var(--surface-container-high));
+  --color-surface-container-highest: rgb(var(--surface-container-highest));
+
+  --breakpoint-xxs: 375px;
+  --breakpoint-xs: 425px;
+
+  --font-roboto: Roboto, sans-serif;
+
+  --shadow-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --shadow-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --shadow-elevation-3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  --shadow-elevation-4: 0px 2px 3px 0px rgba(0, 0, 0, 0.3),
+    0px 6px 10px 4px rgba(0, 0, 0, 0.15);
+  --shadow-elevation-5: 0px 4px 4px 0px rgba(0, 0, 0, 0.3),
+    0px 8px 12px 6px rgba(0, 0, 0, 0.15);
+
+  --grid-template-rows-layout: auto 1fr auto;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility text-display-lg {
+  font-size: 57px;
+  line-height: 64px; /* 112.281% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-display {
+  font-size: 45px;
+  line-height: 52px; /* 115.556% */
+}
+
+@utility text-display-sm {
+  font-size: 36px;
+  line-height: 44px; /* 122.222% */
+}
+
+@utility text-headline-lg {
+  font-size: 32px;
+  line-height: 40px; /* 125% */
+}
+
+@utility text-headline {
+  font-size: 28px;
+  line-height: 36px; /* 128.571% */
+}
+
+@utility text-headline-sm {
+  font-size: 24px;
+  line-height: 32px; /* 133.333% */
+}
+
+@utility text-title-lg {
+  font-size: 22px;
+  line-height: 28px; /* 127.273% */
+}
+
+@utility text-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.15px;
+}
+
+@utility text-title-sm {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+}
+
+@utility text-label-lg {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+}
+
+@utility text-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.5px;
+}
+
+@utility text-label-sm {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px; /* 145.455% */
+  letter-spacing: 0.5px;
+}
+
+@utility text-body-lg {
+  font-size: 16px;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.5px;
+}
+
+@utility text-body {
+  font-size: 14px;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.25px;
+}
+
+@utility text-body-sm {
+  font-size: 12px;
+  line-height: 16px; /* 133.333% */
+}
 
 @layer base {
   :root {
@@ -81,95 +257,5 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-  }
-}
-
-@layer utilities {
-  .text-display-lg {
-    font-size: 57px;
-    line-height: 64px; /* 112.281% */
-    letter-spacing: -0.25px;
-  }
-
-  .text-display {
-    font-size: 45px;
-    line-height: 52px; /* 115.556% */
-  }
-
-  .text-display-sm {
-    font-size: 36px;
-    line-height: 44px; /* 122.222% */
-  }
-
-  .text-headline-lg {
-    font-size: 32px;
-    line-height: 40px; /* 125% */
-  }
-
-  .text-headline {
-    font-size: 28px;
-    line-height: 36px; /* 128.571% */
-  }
-
-  .text-headline-sm {
-    font-size: 24px;
-    line-height: 32px; /* 133.333% */
-  }
-
-  .text-title-lg {
-    font-size: 22px;
-    line-height: 28px; /* 127.273% */
-  }
-
-  .text-title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px; /* 150% */
-    letter-spacing: 0.15px;
-  }
-
-  .text-title-sm {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px; /* 142.857% */
-    letter-spacing: 0.1px;
-  }
-
-  .text-label-lg {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px; /* 142.857% */
-    letter-spacing: 0.1px;
-  }
-
-  .text-label {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px; /* 133.333% */
-    letter-spacing: 0.5px;
-  }
-
-  .text-label-sm {
-    font-size: 11px;
-    font-weight: 500;
-    line-height: 16px; /* 145.455% */
-    letter-spacing: 0.5px;
-  }
-
-  .text-body-lg {
-    font-size: 16px;
-    line-height: 24px; /* 150% */
-    letter-spacing: 0.5px;
-  }
-
-  .text-body {
-    font-size: 14px;
-    line-height: 20px; /* 142.857% */
-    letter-spacing: 0.25px;
-  }
-
-  .text-body-sm {
-    font-size: 12px;
-    line-height: 16px; /* 133.333% */
   }
 }
