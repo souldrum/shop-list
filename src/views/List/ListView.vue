@@ -2,27 +2,42 @@
 import AppList from "@/components/List/AppList.vue";
 import {
   useAddProduct,
+  useDeleteProducts,
   useGetProducts,
-  useProductsQty,
-  useUpdateProducts,
 } from "@/composables/useProducts";
+import type { Product } from "@/types/product.types";
 import AppButton from "@/ui/Button/AppButton.vue";
-import { ref, watch, watchEffect } from "vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import {
+  PlusIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  ShoppingCartIcon,
+} from "@heroicons/vue/24/outline";
+import { computed, ref, watch } from "vue";
 
-const products = useGetProducts();
 const productTitle = ref("");
-const qty = ref(useProductsQty());
 const changeQtyAnimate = ref("");
 
-const updateQty = () => {
-  qty.value = useProductsQty();
-};
+const hideIsDone = ref(false);
+
+const products = computed<Product[]>(() => {
+  return hideIsDone.value
+    ? useGetProducts().value.filter((p) => !p.done)
+    : useGetProducts().value;
+});
+
+const qty = computed<number>(() => {
+  return useGetProducts().value.length;
+});
+
+const qtyDone = computed<number>(() => {
+  return useGetProducts().value.filter((p) => p.done).length;
+});
 
 watch(qty, () => addQtyAnimate());
 
 const addQtyAnimate = () => {
-  changeQtyAnimate.value = "!text-error animate-ping";
+  changeQtyAnimate.value = "text-error! animate-ping";
 
   setTimeout(() => {
     changeQtyAnimate.value = "";
@@ -32,11 +47,12 @@ const addQtyAnimate = () => {
 const onClearList = () => {
   if (!confirm("Очистить список?")) return;
 
-  products.value = [];
-  useUpdateProducts();
+  useDeleteProducts();
 };
 
-watchEffect(updateQty);
+const onHideIsDone = () => {
+  hideIsDone.value = !hideIsDone.value;
+};
 
 const onSubmit = () => {
   if (!productTitle.value.trim()) return;
@@ -63,20 +79,20 @@ const onSubmit = () => {
       <h1 class="text-title sm:text-headline-sm text-primary">Список</h1>
     </div>
 
-    <div class="text-center text-on-background-op-38" v-if="!products.length">
+    <div class="text-center text-on-background-op-38" v-if="!qty">
       Список пуст, добавьте продукты
     </div>
     <AppList v-else :products />
 
     <div
-      class="flex flex-col gap-2 px-2 sticky bottom-0 rounded-t-xl bg-surface"
+      class="flex flex-col gap-2 p-2 sticky bottom-0 rounded-t-xl bg-surface"
     >
       <form class="flex gap-2 items-center" @submit.prevent="onSubmit">
         <div
           class="border-b focus-within:border-b-2 border-outline-variant pb-3 pl-4 min-w-input text-outline text-body-lg bg-inherit"
         >
           <input
-            class="pt-2 bg-transparent outline-none autofill:shadow-input-autocomplete w-11/12 placeholder:text-outline-variant"
+            class="pt-2 bg-transparent outline-hidden autofill:shadow-input-autocomplete w-11/12 placeholder:text-outline-variant"
             v-model="productTitle"
             placeholder="Новый продукт"
             autoComplete="off"
@@ -90,20 +106,37 @@ const onSubmit = () => {
       </form>
 
       <div class="flex gap-2 text-secondary">
-        <span>Всего продуктов:</span>
+        <span>Продуктов в списке:</span>
         <span class="text-secondary-fixed-dim" :class="changeQtyAnimate">{{
           qty
         }}</span>
+
+        <div v-show="qtyDone" class="flex ml-4">
+          <ShoppingCartIcon class="size-14"> </ShoppingCartIcon>
+          <div
+            class="relative flex justify-center items-center rounded-full h-6 w-6 -translate-x-4 bg-tertiary-container"
+          >
+            {{ qtyDone }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <AppButton v-show="qty" style-type="outlined" @click="onClearList">
+          Очистить
+        </AppButton>
+
+        <AppButton
+          v-show="qtyDone"
+          style-type="tonal"
+          class="bg-tertiary-container! text-on-tertiary-container!"
+          @click="onHideIsDone"
+        >
+          <EyeIcon v-if="hideIsDone" class="size-5" />
+          <EyeSlashIcon v-else class="size-5" />
+          <span>отмеченные</span>
+        </AppButton>
       </div>
     </div>
-
-    <AppButton
-      v-if="products.length"
-      style-type="outlined"
-      class="flex w-fit"
-      @click="onClearList"
-    >
-      Очистить список
-    </AppButton>
   </div>
 </template>

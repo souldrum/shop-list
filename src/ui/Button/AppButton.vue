@@ -17,7 +17,7 @@ const { styleType, disabled } = defineProps<Props>();
 
 <template>
   <button
-    class="flex gap-2 justify-center items-center text-label-lg py-2.5 px-6 rounded-full outline-none"
+    class="flex gap-2 justify-center items-center text-label-lg py-2.5 px-6 rounded-full outline-hidden"
     :class="{
       'text-on-primary bg-primary shadow-elevation-2 active:shadow-elevation-1':
         styleType === 'filled',

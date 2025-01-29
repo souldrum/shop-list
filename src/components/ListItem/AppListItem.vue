@@ -89,13 +89,13 @@ const onDelete = (id: string) => {
   <li
     class="flex justify-between max-w-full p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low text-on-surface-variant"
     :class="{
-      '!bg-tertiary-container': product.done,
-      '!bg-error-container': product.canceled,
+      'bg-tertiary-container!': product.done,
+      'bg-error-container!': product.canceled,
     }"
   >
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
       <input
-        class="bg-inherit outline-none border-b border-outline p-1"
+        class="bg-inherit outline-hidden border-b border-outline p-1"
         v-model="editValue"
         @blur="onBlur(product.id)"
         @keyup.enter="onBlur(product.id)"

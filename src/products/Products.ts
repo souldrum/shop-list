@@ -47,8 +47,9 @@ export class Products {
     useSetStorageData(PRODUCTS, this._products.value);
   };
 
-  public getProductsQty = (): number => {
-    return this._products.value.length;
+  public deleteProducts = (): void => {
+    this._products.value = [];
+    useSetStorageData(PRODUCTS, this._products.value);
   };
 
   public updateProducts = (): void => {

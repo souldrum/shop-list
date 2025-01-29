@@ -6,7 +6,7 @@ const {
   getProducts,
   deleteProduct,
   addProduct,
-  getProductsQty,
+  deleteProducts,
   updateProducts,
 } = Products.getInstance();
 
@@ -24,8 +24,8 @@ export const useDeleteProduct = (id: string): void => {
   deleteProduct(id);
 };
 
-export const useProductsQty = (): number => {
-  return getProductsQty();
+export const useDeleteProducts = () => {
+  deleteProducts();
 };
 
 export const useUpdateProducts = () => {
