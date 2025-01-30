@@ -15,6 +15,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { computed, ref, watch } from "vue";
 
+const allProducts = useGetProducts();
 const productTitle = ref("");
 const changeQtyAnimate = ref("");
 
@@ -22,16 +23,16 @@ const hideIsDone = ref(false);
 
 const products = computed<Product[]>(() => {
   return hideIsDone.value
-    ? useGetProducts().value.filter((p) => !p.done)
-    : useGetProducts().value;
+    ? allProducts.value.filter((p) => !p.done)
+    : allProducts.value;
 });
 
 const qty = computed<number>(() => {
-  return useGetProducts().value.length;
+  return allProducts.value.length;
 });
 
 const qtyDone = computed<number>(() => {
-  return useGetProducts().value.filter((p) => p.done).length;
+  return allProducts.value.filter((p) => p.done).length;
 });
 
 watch(qty, () => addQtyAnimate());
