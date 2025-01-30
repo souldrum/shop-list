@@ -11,7 +11,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 type Props = {
   product: Product;
@@ -22,15 +22,16 @@ const products = useGetProducts();
 
 const { product, index } = defineProps<Props>();
 
-const isEdit = ref(false);
-const isDone = ref(false);
-const isCanceled = ref(false);
+const isDone = ref(product.done);
+const isCanceled = ref(product.canceled);
 
+const isEdit = ref(false);
 const editValue = ref("");
+
+watchEffect(useUpdateProducts);
 
 const onEdit = (value: string) => {
   editValue.value = value;
-
   isEdit.value = !isEdit.value;
 };
 
@@ -46,8 +47,6 @@ const onBlur = (id: string) => {
 
   targetProduct.title = editValue.value;
   isEdit.value = false;
-
-  useUpdateProducts();
 };
 
 const onDone = (id: string) => {
@@ -60,8 +59,6 @@ const onDone = (id: string) => {
 
   targetProduct.done = isDone.value;
   targetProduct.canceled = isCanceled.value;
-
-  useUpdateProducts();
 };
 
 const onCancel = (id: string) => {
@@ -74,8 +71,6 @@ const onCancel = (id: string) => {
 
   targetProduct.canceled = isCanceled.value;
   targetProduct.done = isDone.value;
-
-  useUpdateProducts();
 };
 
 const onDelete = (id: string) => {
@@ -118,7 +113,7 @@ const onDelete = (id: string) => {
         @click="onDone(product.id)"
       />
       <MinusCircleIcon
-        class="size-6 text-red-500 cursor-pointer"
+        class="size-6 text-error cursor-pointer"
         @click="onCancel(product.id)"
       />
       <TrashIcon class="size-5 cursor-pointer" @click="onDelete(product.id)" />
