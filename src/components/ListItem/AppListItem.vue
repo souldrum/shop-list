@@ -103,7 +103,7 @@ const onDelete = (id: string) => {
     </div>
 
     <span v-else class="mr-auto">{{ index + 1 }}. {{ product.title }}</span>
-    <div v-if="!isEdit" class="flex gap-3">
+    <div v-if="!isEdit" class="flex gap-3" @drag.stop>
       <PencilIcon
         class="size-6 cursor-pointer"
         @click="onEdit(product.title)"
