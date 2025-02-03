@@ -16,10 +16,10 @@ type DraggableOptions = {
 };
 
 const options = ref<DraggableOptions>({
-  animation: 200,
-  group: "description",
-  disabled: false,
-  ghostClass: "ghost",
+  // animation: 200,
+  // group: "description",
+  // disabled: false,
+  // ghostClass: "ghost",
 });
 
 const { products } = defineProps<Props>();
