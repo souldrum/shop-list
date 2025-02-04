@@ -72,6 +72,16 @@ layer(base);
     0px 8px 12px 6px rgba(0, 0, 0, 0.15);
 
   --grid-template-rows-layout: auto 1fr auto;
+
+  --animate-ping-once: ping-once 0.7s cubic-bezier(0, 0, 0.2, 1);
+
+  @keyframes ping-once {
+    75%,
+    100% {
+      transform: scale(2);
+      opacity: 0.3;
+    }
+  }
 }
 
 /*
