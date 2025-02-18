@@ -54,6 +54,7 @@ layer(base);
   --color-surface-container: rgb(var(--surface-container));
   --color-surface-container-high: rgb(var(--surface-container-high));
   --color-surface-container-highest: rgb(var(--surface-container-highest));
+  --color-done: rgb(var(--done));
 
   --breakpoint-xxs: 375px;
   --breakpoint-xs: 425px;
@@ -76,10 +77,13 @@ layer(base);
   --animate-ping-once: ping-once 0.7s cubic-bezier(0, 0, 0.2, 1);
 
   @keyframes ping-once {
-    75%,
-    100% {
+    50% {
       transform: scale(2);
-      opacity: 0.3;
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
     }
   }
 }
@@ -241,6 +245,7 @@ layer(base);
     --surface-container: 252 234 228;
     --surface-container-high: 246 229 222;
     --surface-container-highest: 241 223 216;
+    --done: 223 255 171;
   }
 
   input[type="number"]::-webkit-outer-spin-button,

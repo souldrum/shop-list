@@ -8,16 +8,17 @@ import {
 import type { Product } from "@/types/product.types";
 import AppButton from "@/ui/Button/AppButton.vue";
 import {
-  PlusIcon,
   EyeIcon,
   EyeSlashIcon,
+  PlusIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/24/outline";
 import { computed, ref, watch } from "vue";
 
 const allProducts = useGetProducts();
 const productTitle = ref("");
-const changeQtyAnimate = ref("");
+const qtyAnimate = ref("");
+const qtyDoneAnimate = ref("");
 
 const hideIsDone = ref(false);
 
@@ -35,15 +36,8 @@ const qtyDone = computed<number>(() => {
   return allProducts.value.filter((p) => p.done).length;
 });
 
-watch(qty, () => addQtyAnimate());
-
-const addQtyAnimate = () => {
-  changeQtyAnimate.value = "text-error! animate-ping";
-
-  setTimeout(() => {
-    changeQtyAnimate.value = "";
-  }, 800);
-};
+watch(qty, () => (qtyAnimate.value = "animate-ping-once"));
+watch(qtyDone, () => (qtyDoneAnimate.value = "animate-ping-once"));
 
 const onClearList = () => {
   if (!confirm("Очистить список?")) return;
@@ -108,18 +102,25 @@ const onSubmit = () => {
 
       <div class="flex gap-2 text-secondary">
         <span>Продуктов в списке:</span>
-        <span class="text-secondary-fixed-dim" :class="changeQtyAnimate">{{
-          qty
-        }}</span>
+        <span
+          class="text-secondary-fixed-dim"
+          :class="qtyAnimate"
+          @animationend="qtyAnimate = ''"
+          >{{ qty }}</span
+        >
 
-        <div v-show="qtyDone" class="flex ml-4">
-          <ShoppingCartIcon class="size-14"> </ShoppingCartIcon>
-          <div
-            class="relative flex justify-center items-center rounded-full h-6 w-6 -translate-x-4 bg-tertiary-container"
-          >
-            {{ qtyDone }}
+        <Transition name="shoppingCart">
+          <div v-show="qtyDone" class="flex ml-4">
+            <ShoppingCartIcon class="size-14"> </ShoppingCartIcon>
+            <div
+              class="relative flex justify-center items-center rounded-full h-6 w-6 -translate-x-4 bg-done"
+              :class="qtyDoneAnimate"
+              @animationend="qtyDoneAnimate = ''"
+            >
+              {{ qtyDone }}
+            </div>
           </div>
-        </div>
+        </Transition>
       </div>
 
       <div class="flex gap-2">
@@ -130,7 +131,7 @@ const onSubmit = () => {
         <AppButton
           v-show="qtyDone"
           style-type="tonal"
-          class="bg-tertiary-container! text-on-tertiary-container!"
+          class="bg-done! text-on-tertiary-container!"
           @click="onHideIsDone"
         >
           <EyeIcon v-if="hideIsDone" class="size-5" />
@@ -141,3 +142,16 @@ const onSubmit = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.shoppingCart-enter-active,
+.shoppingCart-leave-active {
+  transition: all 0.3s ease;
+}
+
+.shoppingCart-enter-from,
+.shoppingCart-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+</style>
