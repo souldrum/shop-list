@@ -10,7 +10,7 @@ const { products } = defineProps<Props>();
 </script>
 
 <template>
-  <ul class="flex flex-col gap-2">
+  <ul class="flex flex-col gap-2 animate-appear">
     <TransitionGroup name="listItem">
       <AppListItem
         v-for="(product, index) of products"
