@@ -49,6 +49,16 @@ const onHideIsDone = () => {
   hideIsDone.value = !hideIsDone.value;
 };
 
+const onQtyDoneAnimationEnd = () => {
+  qtyDoneAnimate.value = "";
+
+  if (qtyDone.value !== 0 && qtyDone.value === qty.value) {
+    if (confirm("Отлично! \nВсе продукты собраны! \nХотите очистить список?")) {
+      useDeleteProducts();
+    }
+  }
+};
+
 const onSubmit = () => {
   if (!productTitle.value.trim()) return;
 
@@ -111,11 +121,11 @@ const onSubmit = () => {
 
         <Transition name="shoppingCart">
           <div v-show="qtyDone" class="flex ml-4">
-            <ShoppingCartIcon class="size-14"> </ShoppingCartIcon>
+            <ShoppingCartIcon class="size-14" />
             <div
-              class="relative flex justify-center items-center rounded-full h-6 w-6 -translate-x-4 bg-done"
+              class="relative flex justify-center items-center rounded-full border h-6 w-6 -translate-x-4 bg-done"
               :class="qtyDoneAnimate"
-              @animationend="qtyDoneAnimate = ''"
+              @animationend="onQtyDoneAnimationEnd"
             >
               {{ qtyDone }}
             </div>
