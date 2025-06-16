@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  useDeleteProduct,
-  useGetProducts,
-  useUpdateProducts,
-} from "@/composables/useProducts";
+import { useProducts } from "@/composables/useProducts";
 import type { Product } from "@/types/product.types";
 import {
   CheckIcon,
@@ -11,14 +7,14 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 type Props = {
   product: Product;
   index: number;
 };
 
-const products = useGetProducts();
+const { useUpdateProduct, useDeleteProduct } = useProducts();
 
 const { product, index } = defineProps<Props>();
 
@@ -28,55 +24,47 @@ const isCanceled = ref(product.canceled);
 const isEdit = ref(false);
 const editValue = ref("");
 
-watchEffect(useUpdateProducts);
-
 const onEdit = (value: string) => {
   editValue.value = value;
   isEdit.value = !isEdit.value;
 };
 
-const onBlur = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onBlur = async (id: string) => {
   if (!editValue.value.trim()) {
     isEdit.value = false;
     return;
   }
 
-  targetProduct.title = editValue.value;
+  await useUpdateProduct(id, { ...product, title: editValue.value });
   isEdit.value = false;
 };
 
-const onDone = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onDone = async (id: string) => {
   isDone.value = !isDone.value;
   isCanceled.value = false;
 
-  targetProduct.done = isDone.value;
-  targetProduct.canceled = isCanceled.value;
+  await useUpdateProduct(id, {
+    ...product,
+    done: isDone.value,
+    canceled: isCanceled.value,
+  });
 };
 
-const onCancel = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onCancel = async (id: string) => {
   isCanceled.value = !isCanceled.value;
   isDone.value = false;
 
-  targetProduct.canceled = isCanceled.value;
-  targetProduct.done = isDone.value;
+  await useUpdateProduct(id, {
+    ...product,
+    done: isDone.value,
+    canceled: isCanceled.value,
+  });
 };
 
-const onDelete = (id: string) => {
+const onDelete = async (id: string) => {
   if (!confirm("Удалить?")) return;
 
-  useDeleteProduct(id);
+  await useDeleteProduct(id);
 };
 </script>
 
@@ -84,8 +72,8 @@ const onDelete = (id: string) => {
   <li
     class="flex justify-between max-w-full p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low text-on-surface-variant"
     :class="{
-      'bg-done!': product.done,
-      'bg-error-container!': product.canceled,
+      'bg-done!': isDone,
+      'bg-error-container!': isCanceled,
     }"
   >
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
