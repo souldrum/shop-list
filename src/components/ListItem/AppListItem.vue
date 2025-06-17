@@ -8,6 +8,7 @@ import {
   TrashIcon,
 } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
+import { VueSpinnerDots } from "vue3-spinners";
 
 type Props = {
   product: Product;
@@ -20,6 +21,7 @@ const { product, index } = defineProps<Props>();
 
 const isDone = ref(product.done);
 const isCanceled = ref(product.canceled);
+const loading = ref(false);
 
 const isEdit = ref(false);
 const editValue = ref("");
@@ -35,7 +37,10 @@ const onBlur = async (id: string) => {
     return;
   }
 
+  loading.value = true;
   await useUpdateProduct(id, { ...product, title: editValue.value });
+  loading.value = false;
+
   isEdit.value = false;
 };
 
@@ -79,12 +84,15 @@ const onDelete = async (id: string) => {
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
       <input
         class="bg-inherit outline-hidden border-b border-outline p-1"
+        :class="{ 'animate-pulse! border-none!': loading }"
         v-model="editValue"
         @blur="onBlur(product.id)"
         @keyup.enter="onBlur(product.id)"
       />
 
+      <VueSpinnerDots class="text-4xl text-primary" v-if="loading" />
       <CheckIcon
+        v-else
         class="size-6 text-secondary cursor-pointer"
         @click="onBlur(product.id)"
       />
