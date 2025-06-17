@@ -10,6 +10,7 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/vue/24/outline";
 import { computed, onBeforeMount, ref, watch } from "vue";
+import { VueSpinnerDots } from "vue3-spinners";
 
 const { useGetProducts, useDeleteProducts, useAddProduct, productsRef } =
   useProducts();
@@ -97,7 +98,7 @@ watch(qtyDone, () => (qtyDoneAnimate.value = "animate-ping-once"));
       <h1 class="text-title sm:text-headline-sm text-primary">Список</h1>
     </div>
 
-    <div v-if="loading">Загружаем список....</div>
+    <VueSpinnerDots class="self-center text-primary text-6xl" v-if="loading" />
     <div v-else>
       <div class="text-center text-on-background-op-38" v-if="!qty">
         Список пуст, добавьте продукты
