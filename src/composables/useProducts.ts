@@ -1,6 +1,6 @@
 import { Products } from "@/products/Products";
 import type { Product } from "@/types/product.types";
-import { type Ref } from "vue";
+import { computed, ref } from "vue";
 
 const {
   getProducts,
@@ -10,10 +10,25 @@ const {
   updateProducts,
 } = Products.getInstance();
 
-export const useGetProducts = (): Ref<Product[]> => {
+export const useProducts = () => {
   const productList = getProducts();
+  const hideIsDone = ref(false);
 
-  return productList;
+  const products = computed<Product[]>(() => {
+    return hideIsDone.value
+      ? productList.value.filter((p) => !p.done)
+      : productList.value;
+  });
+
+  const qty = computed<number>(() => {
+    return productList.value.length;
+  });
+
+  const qtyDone = computed<number>(() => {
+    return productList.value.filter((p) => p.done).length;
+  });
+
+  return { productList, hideIsDone, products, qty, qtyDone };
 };
 
 export const useAddProduct = (title: string) => {

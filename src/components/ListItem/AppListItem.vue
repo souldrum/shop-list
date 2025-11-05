@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
   useDeleteProduct,
-  useGetProducts,
+  useProducts,
   useUpdateProducts,
 } from "@/composables/useProducts";
 import type { Product } from "@/types/product.types";
@@ -18,7 +18,7 @@ type Props = {
   index: number;
 };
 
-const products = useGetProducts();
+const { products } = useProducts();
 
 const { product, index } = defineProps<Props>();
 

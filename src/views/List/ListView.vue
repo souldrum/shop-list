@@ -3,9 +3,8 @@ import AppList from "@/components/List/AppList.vue";
 import {
   useAddProduct,
   useDeleteProducts,
-  useGetProducts,
+  useProducts,
 } from "@/composables/useProducts";
-import type { Product } from "@/types/product.types";
 import AppButton from "@/ui/Button/AppButton.vue";
 import {
   EyeIcon,
@@ -13,28 +12,12 @@ import {
   PlusIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/24/outline";
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
-const allProducts = useGetProducts();
+const { hideIsDone, products, qty, qtyDone } = useProducts();
 const productTitle = ref("");
 const qtyAnimate = ref("");
 const qtyDoneAnimate = ref("");
-
-const hideIsDone = ref(false);
-
-const products = computed<Product[]>(() => {
-  return hideIsDone.value
-    ? allProducts.value.filter((p) => !p.done)
-    : allProducts.value;
-});
-
-const qty = computed<number>(() => {
-  return allProducts.value.length;
-});
-
-const qtyDone = computed<number>(() => {
-  return allProducts.value.filter((p) => p.done).length;
-});
 
 watch(qty, () => (qtyAnimate.value = "animate-ping-once"));
 watch(qtyDone, () => (qtyDoneAnimate.value = "animate-ping-once"));
