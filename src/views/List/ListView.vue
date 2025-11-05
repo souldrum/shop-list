@@ -12,15 +12,11 @@ import {
   PlusIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/24/outline";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
-const { hideIsDone, products, qty, qtyDone } = useProducts();
+const { hideIsDone, products, qty, qtyDone, qtyAnimate, qtyDoneAnimate } =
+  useProducts();
 const productTitle = ref("");
-const qtyAnimate = ref("");
-const qtyDoneAnimate = ref("");
-
-watch(qty, () => (qtyAnimate.value = "animate-ping-once"));
-watch(qtyDone, () => (qtyDoneAnimate.value = "animate-ping-once"));
 
 const onClearList = () => {
   if (!confirm("Очистить список?")) return;

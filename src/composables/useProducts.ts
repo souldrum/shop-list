@@ -1,6 +1,6 @@
 import { Products } from "@/products/Products";
 import type { Product } from "@/types/product.types";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 const {
   getProducts,
@@ -13,6 +13,8 @@ const {
 export const useProducts = () => {
   const productList = getProducts();
   const hideIsDone = ref(false);
+  const qtyAnimate = ref("");
+  const qtyDoneAnimate = ref("");
 
   const products = computed<Product[]>(() => {
     return hideIsDone.value
@@ -28,7 +30,18 @@ export const useProducts = () => {
     return productList.value.filter((p) => p.done).length;
   });
 
-  return { productList, hideIsDone, products, qty, qtyDone };
+  watch(qty, () => (qtyAnimate.value = "animate-ping-once"));
+  watch(qtyDone, () => (qtyDoneAnimate.value = "animate-ping-once"));
+
+  return {
+    productList,
+    hideIsDone,
+    products,
+    qty,
+    qtyDone,
+    qtyAnimate,
+    qtyDoneAnimate,
+  };
 };
 
 export const useAddProduct = (title: string) => {
