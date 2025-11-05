@@ -74,7 +74,7 @@ const onCancel = (id: string) => {
 };
 
 const onDelete = (id: string) => {
-  if (!confirm("Удалить?")) return;
+  if (!confirm("Удалить продукт?")) return;
 
   useDeleteProduct(id);
 };
