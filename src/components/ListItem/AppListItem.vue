@@ -67,7 +67,7 @@ const onCancel = async (id: string) => {
 };
 
 const onDelete = async (id: string) => {
-  if (!confirm("Удалить?")) return;
+  if (!confirm("Удалить продукт?")) return;
 
   await useDeleteProduct(id);
 };
