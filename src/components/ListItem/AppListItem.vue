@@ -11,7 +11,8 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
+import { VueSpinnerDots } from "vue3-spinners";
 
 type Props = {
   product: Product;
@@ -24,59 +25,55 @@ const { product, index } = defineProps<Props>();
 
 const isDone = ref(product.done);
 const isCanceled = ref(product.canceled);
+const loading = ref(false);
 
 const isEdit = ref(false);
 const editValue = ref("");
-
-watchEffect(useUpdateProducts);
 
 const onEdit = (value: string) => {
   editValue.value = value;
   isEdit.value = !isEdit.value;
 };
 
-const onBlur = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onBlur = async (id: string) => {
   if (!editValue.value.trim()) {
     isEdit.value = false;
     return;
   }
 
-  targetProduct.title = editValue.value;
+  loading.value = true;
+  await useUpdateProduct(id, { ...product, title: editValue.value });
+  loading.value = false;
+
   isEdit.value = false;
 };
 
-const onDone = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onDone = async (id: string) => {
   isDone.value = !isDone.value;
   isCanceled.value = false;
 
-  targetProduct.done = isDone.value;
-  targetProduct.canceled = isCanceled.value;
+  await useUpdateProduct(id, {
+    ...product,
+    done: isDone.value,
+    canceled: isCanceled.value,
+  });
 };
 
-const onCancel = (id: string) => {
-  const targetProduct = products.value.find((p) => p.id === id);
-
-  if (!targetProduct) return;
-
+const onCancel = async (id: string) => {
   isCanceled.value = !isCanceled.value;
   isDone.value = false;
 
-  targetProduct.canceled = isCanceled.value;
-  targetProduct.done = isDone.value;
+  await useUpdateProduct(id, {
+    ...product,
+    done: isDone.value,
+    canceled: isCanceled.value,
+  });
 };
 
-const onDelete = (id: string) => {
+const onDelete = async (id: string) => {
   if (!confirm("Удалить?")) return;
 
-  useDeleteProduct(id);
+  await useDeleteProduct(id);
 };
 </script>
 
@@ -84,19 +81,22 @@ const onDelete = (id: string) => {
   <li
     class="flex justify-between max-w-full p-4 gap-2 items-center rounded-xl shadow-elevation-1 bg-surface-container-low text-on-surface-variant"
     :class="{
-      'bg-done!': product.done,
-      'bg-error-container!': product.canceled,
+      'bg-done!': isDone,
+      'bg-error-container!': isCanceled,
     }"
   >
     <div v-if="isEdit" class="flex items-center gap-2 mr-auto">
       <input
         class="bg-inherit outline-hidden border-b border-outline p-1"
+        :class="{ 'animate-pulse! border-none!': loading }"
         v-model="editValue"
         @blur="onBlur(product.id)"
         @keyup.enter="onBlur(product.id)"
       />
 
+      <VueSpinnerDots class="text-4xl text-primary" v-if="loading" />
       <CheckIcon
+        v-else
         class="size-6 text-secondary cursor-pointer"
         @click="onBlur(product.id)"
       />

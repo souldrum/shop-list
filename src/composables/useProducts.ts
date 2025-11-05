@@ -1,4 +1,4 @@
-import { Products } from "@/products/Products";
+import { Products } from "@/services/Products";
 import type { Product } from "@/types/product.types";
 import { computed, ref } from "vue";
 
@@ -7,7 +7,8 @@ const {
   deleteProduct,
   addProduct,
   deleteProducts,
-  updateProducts,
+  updateProduct,
+  productsRef,
 } = Products.getInstance();
 
 export const useProducts = () => {
@@ -31,18 +32,21 @@ export const useProducts = () => {
   return { productList, hideIsDone, products, qty, qtyDone };
 };
 
-export const useAddProduct = (title: string) => {
-  addProduct(title);
+const useAddProduct = async (title: string): Promise<void> => {
+  await addProduct(title);
 };
 
-export const useDeleteProduct = (id: string): void => {
-  deleteProduct(id);
+const useDeleteProduct = async (id: string): Promise<void> => {
+  await deleteProduct(id);
 };
 
-export const useDeleteProducts = () => {
-  deleteProducts();
+const useDeleteProducts = async (): Promise<void> => {
+  await deleteProducts();
 };
 
-export const useUpdateProducts = () => {
-  updateProducts();
+const useUpdateProduct = async (
+  id: string,
+  product: Product
+): Promise<void> => {
+  await updateProduct(id, product);
 };
